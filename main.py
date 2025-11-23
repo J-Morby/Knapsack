@@ -9,7 +9,7 @@ class Calener:
         pass
         
 
-class Knapsack:
+class Event:
     def __init__(self, name, length, value, denominations):
         self.name = name
         self.length = length
@@ -21,7 +21,7 @@ class Knapsack:
                 f"value={self.value}, denominations={self.denomination})")
     
 
-def KnapsackGenerator():
+def EventGanerator():
     count = int(input("How many objects? "))
     for i in range(count):
         name = input("enter name? ")
@@ -29,21 +29,22 @@ def KnapsackGenerator():
         value = float(input("enter value? "))
         denomination = float(input("enter denominations? "))
         
-        # FIXED — create a Knapsack object, not calling the string 'name'
-        events.append(Knapsack(name, length, value, denomination))
+        events.append(Event(name, length, value, denomination))
 
 
-def PrintKnapsack():
+def PrintEvents():
     print("\nGenerated Items:")
     for item in events:
         print(item)
 
 
-class Event:
-    def __init__(self):
-        pass
+class Knapsack:
+    def __init__(self,size):
+        self.size = size
+
+    
 
 
 # --- Run app ---
-KnapsackGenerator()
-PrintKnapsack()
+EventGanerator()
+PrintEvents()
