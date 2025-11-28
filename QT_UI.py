@@ -1,8 +1,11 @@
 import sys
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLineEdit, QLabel, QVBoxLayout, QPushButton, QWidget, QTableWidget, QTableWidgetItem,
-    QVBoxLayout, QPushButton, QHBoxLayout
-)
+    QVBoxLayout, QPushButton, QHBoxLayout)
+from Knapsack import Solve, Item
+
+
+
 class Spreadsheet(QWidget):
     def __init__(self):
         super().__init__()
@@ -10,7 +13,7 @@ class Spreadsheet(QWidget):
         self.table = QTableWidget(0, 3)  # 0 rows, 3 columns
         self.table.setHorizontalHeaderLabels(["Name", "Value", "Size"])
 
-        # Buttons
+        # Buttons--------------------
         add_btn = QPushButton("Add Item")
         remove_btn = QPushButton("Remove Selected Item")
         add_test_btn = QPushButton("Add Test Data")
@@ -21,26 +24,51 @@ class Spreadsheet(QWidget):
         add_test_btn.clicked.connect(self.add_test_rows)
         start_button.clicked.connect(self.start)
 
-        # Layout
+        # TextBox--------------------
+        self.knapsack_size_txt = QLineEdit()
+        self.knapsack_size_txt.setText("10")
+
+        # Lable----------------------
+        knapsack_size_lbl = QLabel("Knappsack Size")
+
+        # Layouts--------------------
         widget_button_layout = QHBoxLayout()
         widget_button_layout.addWidget(add_btn)
         widget_button_layout.addWidget(remove_btn)
         widget_button_layout.addWidget(add_test_btn)
 
-        start_button_layout = QHBoxLayout()
-        start_button_layout.addWidget(start_button)
-
+        knapsack_size_layout = QHBoxLayout()
+        knapsack_size_layout.addWidget(knapsack_size_lbl)
+        knapsack_size_layout.addWidget(self.knapsack_size_txt)
 
         layout = QVBoxLayout()
         layout.addWidget(self.table)
         layout.addLayout(widget_button_layout)
-        layout.addLayout(start_button_layout)
+        layout.addLayout(knapsack_size_layout)
+        layout.addWidget(start_button)
 
         self.setLayout(layout)
         self.setWindowTitle("Spreadsheet Example")
 
     def start(self):
-        pass
+        # read knapsack size from textbox
+        try:
+            knapsack_size = int(self.knapsack_size_txt.text())
+        except ValueError:
+            print("Invalid knapsack size")
+            return
+        
+        # get rows from UI
+        data = self.get_data()
+
+
+
+        # convert table rows into Item objects
+        
+
+        # 4. call solver (your function)
+        print(Solve(knapsack_size, data))
+        
 
     def add_row(self):
         row = self.table.rowCount()
