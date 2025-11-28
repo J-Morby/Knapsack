@@ -2,13 +2,13 @@
 events = []
 
 class Event:
-    def __init__(self, name, length, value):
+    def __init__(self, name, size, value):
         self.name = name
-        self.length = length
+        self.size = size
         self.value = value
     
     def __repr__(self):
-        return (f"Event(name={self.name}, length={self.length}, "
+        return (f"Event(name={self.name}, size={self.size}, "
                 f"value={self.value})")
 
 
@@ -16,9 +16,9 @@ def EventGanerator():
     count = int(input("How many objects? "))
     for i in range(count):
         name = input("Enter name? ")
-        length = float(input("Enter length? "))
+        size = float(input("Enter size? "))
         value = float(input("Enter value? "))
-        events.append(Event(name, length, value))
+        events.append(Event(name, size, value))
 
 
 def PrintEvents():
@@ -43,8 +43,8 @@ class Knapsack:
         for i in range(1, n+1):
             e = events[i-1]
             for w in range(capacity+1):
-                if e.length <= w:
-                    dp[i][w] = max(e.value + dp[i-1][int(w - e.length)], dp[i-1][w])
+                if e.size <= w:
+                    dp[i][w] = max(e.value + dp[i-1][int(w - e.size)], dp[i-1][w])
                 else:
                     dp[i][w] = dp[i-1][w]
         
@@ -55,7 +55,7 @@ class Knapsack:
             if dp[i][w] != dp[i-1][w]:
                 e = events[i-1]
                 chosen.append(e)
-                w -= int(e.length)
+                w -= int(e.size)
         
         chosen.reverse()
         
