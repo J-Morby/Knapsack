@@ -2,7 +2,9 @@ import sys
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLineEdit, QLabel, QVBoxLayout, QPushButton, QWidget, QTableWidget, QTableWidgetItem,
     QVBoxLayout, QPushButton, QHBoxLayout)
-from Knapsack import Solve, Item
+
+from Knapsack import Fill_Knapsack, Generate_Schedule
+from Config import Task,tasks
 
 
 
@@ -11,11 +13,11 @@ class Spreadsheet(QWidget):
         super().__init__()
 
         self.table = QTableWidget(0, 3)  # 0 rows, 3 columns
-        self.table.setHorizontalHeaderLabels(["Name", "Value", "Size"])
+        self.table.setHorizontalHeaderLabels(["Name", "Importance", "Length"])
 
         # Buttons--------------------
-        add_btn = QPushButton("Add Item")
-        remove_btn = QPushButton("Remove Selected Item")
+        add_btn = QPushButton("Add Task")
+        remove_btn = QPushButton("Remove Selected Task")
         add_test_btn = QPushButton("Add Test Data")
         start_button = QPushButton("Start")
 
@@ -59,15 +61,9 @@ class Spreadsheet(QWidget):
             return
         
         # get rows from UI
-        data = self.get_data()
+        self.get_data()
 
-
-
-        # convert table rows into Item objects
-        
-
-        # 4. call solver (your function)
-        print(Solve(knapsack_size, data))
+        Generate_Schedule()
         
 
     def add_row(self):
@@ -76,16 +72,16 @@ class Spreadsheet(QWidget):
 
         #set empty default items
         for col in range(self.table.columnCount()):
-            self.table.setItem(row, col, QTableWidgetItem(["Name", "Value", "Size"]))
+            self.table.setItem(row, col, QTableWidgetItem(["Name", "Importance", "Length"]))
 
     def add_test_rows(self):
         row = self.table.rowCount()
         #self.table.insertRow(row)
 
-        preset_values = [["Hat"   , 2, 2],
-                         ["Phone" , 5, 3],
-                         ["Keys"  , 8, 1],
-                         ["Laptop", 8, 8]]
+        preset_values = [["Unload Washer"   , 2, 2],
+                         ["Walk Dog" , 5, 3],
+                         ["Pay Mum"  , 8, 1],
+                         ["Fix Car", 8, 8]]
 
         for row_data in preset_values:
             row = self.table.rowCount()
@@ -101,19 +97,27 @@ class Spreadsheet(QWidget):
             self.table.removeRow(selected)
 
     def get_data(self):
-        data = []
+        tasks.clear()   # wipe old data
+
         for row in range(self.table.rowCount()):
-            row_data = []
-            for col in range(self.table.columnCount()):
-                item = self.table.item(row, col)
-                row_data.append(item.text() if item else "")
-            data.append(row_data)
-        return data
+            name_task  = self.table.item(row, 0)
+            importance_task = self.table.item(row, 1)
+            length_task  = self.table.item(row, 2)
+
+            # skip empty rows
+            if not name_task or not importance_task or not length_task:  
+                continue
+
+            name = name_task.text()
+            importance = int(importance_task.text())
+            lenth = int(length_task.text())
+
+            tasks.append(Task(name, importance, lenth))
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Spreadsheet()
-    window.show()
+    window.show()   
     print("test")
     sys.exit(app.exec_())

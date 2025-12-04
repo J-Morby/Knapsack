@@ -1,10 +1,12 @@
 
 
-# class Items:
-#     def __init__(self, name, value, size):
-#         self.name = name
-#         self.value = value
-#         self.size = size
+class Task:
+    def __init__(self, name, importance, length):
+        self.name = name
+        self.importance = importance
+        self.length = length
 
-#     def __repr__(self):
-#         return (f"Event(name={self.name}, length={self.length}, "f"value={self.value})")
+    def __repr__(self):
+        return (f"Task (name={self.name}, "f"importance={self.importance}, length={self.length})")
+
+tasks = []  
