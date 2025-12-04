@@ -34,8 +34,8 @@ def Fill_Knapsack(knapsack_size):
     
     chosen_items.reverse()
 
-    print("\nKnapsack filled with maximum value:", dp[n][max_capacity])
-    print("Items chosen:")
+    print("Day filled with maximum importance:", dp[n][max_capacity])
+    print("Tasks chosen:")
     for item in chosen_items:
         print(item)
     print(f"Space used={space_used} Space remaining={max_capacity-space_used}")
@@ -55,7 +55,7 @@ def Generate_Schedule():
     print(tasks)
 
     for day in schedule:
-        print(day)
+        print("\n",day)
         Fill_Knapsack(day_length)
 
 

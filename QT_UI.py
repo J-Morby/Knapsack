@@ -78,16 +78,16 @@ class Spreadsheet(QWidget):
         row = self.table.rowCount()
         #self.table.insertRow(row)
 
-        preset_values = [["Unload Washer"   , 2, 2],
+        preset_tasks = [["Unload Washer"   , 2, 2],
                          ["Walk Dog" , 5, 3],
                          ["Pay Mum"  , 8, 1],
-                         ["Fix Car", 8, 8]]
+                         ["Fix Car", 15, 8]]
 
-        for row_data in preset_values:
+        for row_data in preset_tasks:
             row = self.table.rowCount()
             self.table.insertRow(row)
-            for col, value in enumerate(row_data):
-                self.table.setItem(row, col, QTableWidgetItem(str(value)))
+            for col, importance in enumerate(row_data):
+                self.table.setItem(row, col, QTableWidgetItem(str(importance)))
 
         
 
