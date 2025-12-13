@@ -1,7 +1,8 @@
 import sys
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLineEdit, QLabel, QVBoxLayout, QPushButton, QWidget, QTableWidget, QTableWidgetItem,
-    QVBoxLayout, QPushButton, QHBoxLayout)
+    QVBoxLayout, QPushButton, QHBoxLayout,QSlider)
 
 from Knapsack import Fill_Knapsack, Generate_Schedule
 from Config import Task,tasks
@@ -27,11 +28,26 @@ class Spreadsheet(QWidget):
         start_button.clicked.connect(self.start)
 
         # TextBox--------------------
-        self.knapsack_size_txt = QLineEdit()
-        self.knapsack_size_txt.setText("10")
+        self.start_time_txt = QLineEdit()
+        self.start_time_txt.setText("9")
+        self.end_time_txt = QLineEdit()
+        self.end_time_txt.setText("17")
 
         # Lable----------------------
-        knapsack_size_lbl = QLabel("Knappsack Size")
+        start_time_lbl = QLabel("Start Time")
+        end_time_lbl = QLabel("End Time")
+
+        # Slider--------------------
+        start_time_layout = QHBoxLayout()
+        start_slider = QSlider(Qt.Orientation.Horizontal)
+        start_slider.setMinimum(0000)
+        start_slider.setMaximum(2400)
+        start_slider.setValue(900)
+        end_time_layout = QHBoxLayout()
+        end_slider = QSlider(Qt.Orientation.Horizontal)
+        end_slider.setMinimum(0000)
+        end_slider.setMaximum(2400)
+        end_slider.setValue(1700)
 
         # Layouts--------------------
         widget_button_layout = QHBoxLayout()
@@ -39,14 +55,16 @@ class Spreadsheet(QWidget):
         widget_button_layout.addWidget(remove_btn)
         widget_button_layout.addWidget(add_test_btn)
 
-        knapsack_size_layout = QHBoxLayout()
-        knapsack_size_layout.addWidget(knapsack_size_lbl)
-        knapsack_size_layout.addWidget(self.knapsack_size_txt)
+        times_layout = QHBoxLayout()
+        times_layout.addWidget(start_time_lbl)
+        times_layout.addWidget(self.start_time_txt)
+        times_layout.addWidget(end_time_lbl)
+        times_layout.addWidget(self.end_time_txt)
 
         layout = QVBoxLayout()
         layout.addWidget(self.table)
         layout.addLayout(widget_button_layout)
-        layout.addLayout(knapsack_size_layout)
+        layout.addLayout(times_layout)
         layout.addWidget(start_button)
 
         self.setLayout(layout)
